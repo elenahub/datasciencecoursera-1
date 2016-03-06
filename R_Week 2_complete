@@ -1,0 +1,25 @@
+
+complete<-function(directory, id=1:332) {
+  ## A function that reads a directory full of files and reports the number of completely observed cases in each data file
+  ## 'directory' is a character vector of length 1 indicating
+  ## the location of the CSV files
+  
+  ## 'id' is an integer vector indicating the monitor ID numbers
+  ## to be used
+  
+  ## Return a data frame of the form:
+  ## id nobs
+  ## 1  117
+  ## 2  1041
+  ## ...
+  ## where 'id' is the monitor ID number and 'nobs' is the
+  ## number of complete cases
++     files_full<-list.files(directory, full.names=TRUE)
++     dat<-data.frame()
++     for (i in id) {
++         dat_selet<-read.csv(files_full[i], header=TRUE)
++         dat_complete<-complete.cases(dat_selet)
++         dat<-rbind(dat, data.frame(i, sum(dat_complete)))
++     }
++     dat
++ }
